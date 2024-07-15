@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Child & Adolescent Mental & Behavioral Disorders Assessment and Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        h1, h2 { color: #333; }
+        .question, .management { margin-bottom: 20px; }
+        button { padding: 10px; margin-right: 10px; }
+        #result, #management { margin-top: 20px; }
+        #credit { margin-top: 30px; font-style: italic; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Child & Adolescent Mental & Behavioral Disorders Assessment and Management</h1>
+    <div id="assessment">
+        <!-- Questions will be dynamically inserted here -->
+    </div>
+    <div id="result"></div>
+    <div id="management"></div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                text: "Are there signs of developmental delay across motor, cognitive, social, communication, and adaptive domains?",
+                yes: 2,
+                no: 3
+            },
+            {
+                id: 2,
+                text: "Are there physical conditions like nutritional deficiency, anemia, or infections that could explain the delay?",
+                yes: "Manage physical conditions and reassess",
+                no: "Consider Developmental Disorder"
+            },
+            {
+                id: 3,
+                text: "Does the child show signs of overactivity, inability to stay still, or being easily distracted?",
+                yes: 4,
+                no: 5
+            },
+            {
+                id: 4,
+                text: "Have these symptoms persisted for at least 6 months and caused considerable difficulty in daily functioning?",
+                yes: "Consider ADHD",
+                no: "Consider Problems with Behavior"
+            },
+            {
+                id: 5,
+                text: "Does the child show repeated aggressive, disobedient, or defiant behavior?",
+                yes: 6,
+                no: 7
+            },
+            {
+                id: 6,
+                text: "Are these behaviors persistent, severe, and inappropriate for the child's developmental level?",
+                yes: "Consider Conduct Disorder",
+                no: "Consider Problems with Behavior"
+            },
+            {
+                id: 7,
+                text: "Does the child often feel irritable, sad, worried, or scared?",
+                yes: 8,
+                no: "No significant mental or behavioral disorder detected"
+            },
+            {
+                id: 8,
+                text: "For adolescents: Are there signs of moderate to severe depression (e.g., persistent low mood, loss of interest, sleep disturbances)?",
+                yes: "Consider Depression",
+                no: "Consider Emotional Disorder"
+            }
+        ];
+
+        const managementGuidelines = {
+            "Developmental Disorder": `
+                <h2>Management for Developmental Disorder:</h2>
+                <ul>
+                    <li>Provide psychoeducation and advice on parenting.</li>
+                    <li>Offer regular follow-up.</li>
+                    <li>If no improvement in 6 months, refer to specialist for further assessment and management.</li>
+                    <li>DO NOT consider pharmacological treatment.</li>
+                </ul>
+            `,
+            "ADHD": `
+                <h2>Management for ADHD:</h2>
+                <ul>
+                    <li>Provide psychosocial treatment for at least 6 months.</li>
+                    <li>If no improvement and the child is at least 6 years old, refer to specialist for consideration of methylphenidate.</li>
+                    <li>If methylphenidate is prescribed:
+                        <ul>
+                            <li>Monitor potential for misuse and diversion.</li>
+                            <li>Every three months: monitor/record height, weight, blood pressure, reported side-effects, and changes in behavior.</li>
+                            <li>After one year: Consult specialist regarding continuation of methylphenidate.</li>
+                        </ul>
+                    </li>
+                </ul>
+            `,
+            "Conduct Disorder": `
+                <h2>Management for Conduct Disorder:</h2>
+                <ul>
+                    <li>Provide psychosocial interventions.</li>
+                    <li>If no improvement or predicted danger to the adolescent, refer to specialist for further assessment and management plan.</li>
+                    <li>DO NOT consider pharmacological treatment.</li>
+                </ul>
+            `,
+            "Emotional Disorder": `
+                <h2>Management for Emotional Disorder:</h2>
+                <ul>
+                    <li>Provide psychosocial treatment for at least 6 months.</li>
+                    <li>If no improvement after 6 months, refer to specialist.</li>
+                    <li>DO NOT initiate pharmacological treatment.</li>
+                </ul>
+            `,
+            "Depression": `
+                <h2>Management for Depression:</h2>
+                <ul>
+                    <li>Provide psychosocial treatment for at least 6 months.</li>
+                    <li>If no improvement and the adolescent is 12 years or older, refer to specialist for consideration of fluoxetine (but not other SSRIs or TCAs).</li>
+                    <li>If fluoxetine is prescribed:
+                        <ul>
+                            <li>Monitor weekly for the first month, then monthly for reported side-effects and changes in mood and other symptoms.</li>
+                            <li>Continue medication for 9-12 months after symptoms have resolved.</li>
+                            <li>Advise against suddenly stopping the medication.</li>
+                        </ul>
+                    </li>
+                </ul>
+            `
+        };
+
+        let currentQuestion = 0;
+
+        function displayQuestion(questionId) {
+            const question = questions.find(q => q.id === questionId);
+            if (!question) {
+                document.getElementById('assessment').innerHTML = '';
+                document.getElementById('result').innerHTML = 'Assessment complete.';
+                return;
+            }
+
+            const html = `
+                <div class="question">
+                    <p>${question.text}</p>
+                    <button onclick="answer('yes', ${question.id})">Yes</button>
+                    <button onclick="answer('no', ${question.id})">No</button>
+                </div>
+            `;
+            document.getElementById('assessment').innerHTML = html;
+        }
+
+        function answer(response, questionId) {
+            const question = questions.find(q => q.id === questionId);
+            const nextQuestion = question[response];
+
+            if (typeof nextQuestion === 'string') {
+                document.getElementById('result').innerHTML = `<h2>Suggestion: ${nextQuestion}</h2>`;
+                document.getElementById('assessment').innerHTML = '';
+                displayManagement(nextQuestion);
+            } else {
+                displayQuestion(nextQuestion);
+            }
+        }
+
+        function displayManagement(diagnosis) {
+            const managementHtml = managementGuidelines[diagnosis] || `
+                <h2>General Management Guidelines:</h2>
+                <ul>
+                    <li>Reassess and monitor symptoms, behavior, and functioning at every visit.</li>
+                    <li>Provide psychoeducation and advice on parenting.</li>
+                    <li>Review psychosocial interventions and revise management plan as needed.</li>
+                    <li>Offer regular follow-up.</li>
+                    <li>If no improvement in 6 months, consider referral to specialist.</li>
+                </ul>
+            `;
+            document.getElementById('management').innerHTML = managementHtml;
+        }
+
+        // Start the assessment
+        displayQuestion(1);
+    </script>
+
+    <div id="credit">DEVELOPED BY Dr. Archit K. Mehta</div>
+</body>
+</html>
