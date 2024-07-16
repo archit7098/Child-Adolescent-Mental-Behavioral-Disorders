@@ -5,12 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Child & Adolescent Mental & Behavioral Disorders Assessment and Management</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
-        h1, h2 { color: #333; }
-        .question, .management { margin-bottom: 20px; }
-        button { padding: 10px; margin-right: 10px; }
-        #result, #management { margin-top: 20px; }
-        #credit { margin-top: 30px; font-style: italic; text-align: center; }
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f0f8ff; /* Light blue background */
+        }
+        h1 { 
+            color: #4169e1; /* Royal blue */
+            text-align: center;
+        }
+        h2 { 
+            color: #20b2aa; /* Light sea green */
+        }
+        .question, .management { 
+            margin-bottom: 20px; 
+            background-color: #ffffff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question p {
+            color: #0000cd; /* Medium blue */
+            font-size: 18px; /* Larger font size for questions */
+            font-weight: bold;
+        }
+        button { 
+            padding: 12px 20px; /* Larger buttons */
+            margin-right: 10px; 
+            font-size: 16px; /* Larger font size for button text */
+            background-color: #4caf50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        #result, #management { 
+            margin-top: 20px; 
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #credit { 
+            margin-top: 30px; 
+            font-style: italic; 
+            text-align: center; 
+            color: #4169e1; /* Royal blue */
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        li::before {
+            content: "•"; 
+            color: #4caf50; /* Green bullet points */
+            display: inline-block; 
+            width: 1em;
+            margin-left: -1em;
+        }
     </style>
 </head>
 <body>
